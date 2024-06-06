@@ -40,7 +40,7 @@ export default function Header() {
           color="gray"
           onClick={() => dispatch(toggleTheme())}
         >
-          {theme === "light" ? <FaSun /> : <FaMoon />}
+          {theme === "light" ?  <FaMoon /> : <FaSun /> }
         </Button>
         {currentUser ? (
           <Dropdown
