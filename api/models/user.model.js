@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { PassThrough } from "stream";
 
 const userSchema = new mongoose.Schema(
   {
