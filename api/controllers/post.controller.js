@@ -34,7 +34,7 @@ export const createPost = async (req, res, next) => {
 export const getPosts = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 9;  // Fixed typo here
+    const limit = parseInt(req.query.limit) || 9; // Fixed typo here
     const sortDirection = req.query.order == "asc" ? 1 : -1;
     const posts = await Post.find({
       ...(req.query.userID && { userID: req.query.userID }),
@@ -72,3 +72,15 @@ export const getPosts = async (req, res, next) => {
   }
 };
 
+export const deletePost = async (req, res, next) => {
+  console.log("Delete request received for postID:", req.params.postID, "and userID:", req.params.userID);
+  if (!req.user.isAdmin || req.user.id !== req.params.userID) {
+    return next(errorHandler(403, "You are not allowed to delete this post!"));
+  }
+  try {
+    await Post.findByIdAndDelete(req.params.postID);
+    res.status(200).json("The post has been deleted");
+  } catch (error) {
+    next(error);
+  }
+};
